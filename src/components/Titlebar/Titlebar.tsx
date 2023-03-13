@@ -52,7 +52,6 @@ export const Titlebar = () => {
 				top: 0,
 				left: 0,
 				right: 0,
-				borderRadius: '10px 10px 0 0',
 				paddingLeft: '15px',
 				zIndex: 999,
 			}}
