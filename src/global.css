@@ -1,0 +1,19 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+html,
+body {
+	border-radius: 5px;
+	overflow: hidden;
+}
+
+body {
+	background-color: #fff;
+}
+
+body > div {
+	margin-top: 32px;
+}
