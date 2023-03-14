@@ -27,6 +27,11 @@
 				"unmaximize": true,
 				"unminimize": true,
 				"startDragging": true
+			},
+			"http": {
+				"all": true,
+				"request": true,
+				"scope": ["https://auth.kide.app/*", "https://api.kide.app/*"]
 			}
 		},
 		"bundle": {
