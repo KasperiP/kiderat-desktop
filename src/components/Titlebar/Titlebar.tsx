@@ -26,7 +26,6 @@ const ManageButton = (props: ManageButtonProps) => {
 				},
 				':last-child:hover': {
 					backgroundColor: '#f23f42',
-					borderRadius: '0 10px 0 0',
 				},
 			}}
 			onClick={props.onClick}
