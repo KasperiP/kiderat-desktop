@@ -1,7 +1,70 @@
-import { Box, Button, TextField, Typography } from '@mui/material';
+import { LoadingButton } from '@mui/lab';
+import { Alert, Box, Link, TextField, Typography } from '@mui/material';
+import { Body, ResponseType, getClient } from '@tauri-apps/api/http';
+import { open } from '@tauri-apps/api/shell';
+import { FormEvent, useContext, useState } from 'react';
 import { AiOutlineLogin } from 'react-icons/ai';
+import { useNavigate } from 'react-router-dom';
+import { GlobalContext } from '../../context/ContextProvider';
 
 export const Login = () => {
+	const [email, setEmail] = useState('');
+	const [password, setPassword] = useState('');
+	const [loading, setLoading] = useState(false);
+	const [error, setError] = useState('');
+
+	const ctx = useContext(GlobalContext);
+
+	const navigate = useNavigate();
+
+	const handleLogin = async (e: FormEvent<HTMLElement>) => {
+		e.preventDefault();
+
+		setLoading(true);
+
+		const client = await getClient();
+
+		const authBody = Body.text(
+			`client_id=56d9cbe22a58432b97c287eadda040df&grant_type=password&password=${password}&rememberMe=true&username=${email}`
+		);
+
+		const authResponse: any = await client.post(
+			'https://auth.kide.app/oauth2/token',
+			authBody,
+			{
+				responseType: ResponseType.JSON,
+			}
+		);
+
+		const userResponse = await client.get<any>(
+			'https://api.kide.app/api/authentication/user',
+			{
+				headers: {
+					Authorization: `Bearer ${authResponse.data.access_token}`,
+				},
+				responseType: ResponseType.JSON,
+			}
+		);
+
+		setLoading(false);
+
+		console.log(userResponse.status);
+		console.log(authResponse.status);
+
+		if (userResponse.status !== 200 || authResponse.status !== 200) {
+			setError('Invalid email or password');
+			return;
+		}
+
+		ctx?.setState({
+			...ctx,
+			authorizationToken: authResponse.data.access_token,
+			user: userResponse.data.model,
+		});
+
+		navigate('/dashboard');
+	};
+
 	return (
 		<Box
 			sx={{
@@ -45,7 +108,7 @@ export const Login = () => {
 			>
 				<Box
 					component={'form'}
-					onSubmit={() => null}
+					onSubmit={handleLogin}
 					style={{
 						display: 'flex',
 						flexDirection: 'column',
@@ -90,12 +153,50 @@ export const Login = () => {
 						color="#a3a3ad"
 					>
 						Kirjaudu sisään käyttäen <strong>Kide.app</strong>{' '}
-						tunnuksiasi. Emme tallenna kirjautumistietojasi. Lue
-						lisää <a href="/">tietosuojasta</a>.
+						tunnuksiasi. Emme tallenna kirjautumistietojasi.
+						Sovellus pohjautuu avoimeen{' '}
+						<Link
+							href="#"
+							onClick={async () =>
+								await open('https://kide.app/tietosuojaseloste')
+							}
+							sx={{ color: '#5c34ad', textDecoration: 'none' }}
+						>
+							lähdekoodiin
+						</Link>
+						.
 					</Typography>
-					<TextField required label="Sähköposti" type="email" />
-					<TextField required label="Salasana" type="password" />
-					<Button variant="contained">Kirjaudu</Button>
+					{error && <Alert severity="error">{error}</Alert>}
+					<TextField
+						required
+						label="Sähköposti"
+						type="email"
+						value={email}
+						disabled={loading}
+						onChange={(e) => {
+							if (error) setError('');
+							setEmail(e.target.value);
+						}}
+					/>
+					<TextField
+						required
+						label="Salasana"
+						type="password"
+						value={password}
+						disabled={loading}
+						onChange={(e) => {
+							if (error) setError('');
+							setPassword(e.target.value);
+						}}
+					/>
+					<LoadingButton
+						variant="contained"
+						size={'large'}
+						type="submit"
+						loading={loading}
+					>
+						Kirjaudu
+					</LoadingButton>
 				</Box>
 				<Box
 					sx={{
@@ -153,7 +254,6 @@ export const Login = () => {
 								textTransform: 'uppercase',
 								fontWeight: 700,
 								fontSize: '4.5rem',
-								// Gradient text
 								backgroundImage:
 									'linear-gradient(90deg, #5c34ad, #a3a3ad)',
 								WebkitBackgroundClip: 'text',
