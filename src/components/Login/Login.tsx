@@ -48,11 +48,8 @@ export const Login = () => {
 
 		setLoading(false);
 
-		console.log(userResponse.status);
-		console.log(authResponse.status);
-
 		if (userResponse.status !== 200 || authResponse.status !== 200) {
-			setError('Invalid email or password');
+			setError('Kelvoton sähköposti tai salasana.');
 			return;
 		}
 
