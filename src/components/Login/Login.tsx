@@ -105,6 +105,9 @@ export const Login = () => {
 			>
 				<Box
 					component={'form'}
+					autoComplete="off"
+					autoCorrect="off"
+					noValidate
 					onSubmit={handleLogin}
 					style={{
 						display: 'flex',
