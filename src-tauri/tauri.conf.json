@@ -7,7 +7,7 @@
 		"withGlobalTauri": false
 	},
 	"package": {
-		"productName": "tauri-app",
+		"productName": "Kide.rat",
 		"version": "0.0.0"
 	},
 	"tauri": {
