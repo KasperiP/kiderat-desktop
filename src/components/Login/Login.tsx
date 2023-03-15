@@ -11,14 +11,30 @@ export const Login = () => {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const [loading, setLoading] = useState(false);
-	const [error, setError] = useState('');
+	const [error, setError] = useState({ field: '', message: '' });
 
 	const ctx = useContext(GlobalContext);
-
 	const navigate = useNavigate();
 
 	const handleLogin = async (e: FormEvent<HTMLElement>) => {
 		e.preventDefault();
+
+		// Validate email
+		const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g;
+		if (!emailRegex.test(email)) {
+			return setError({
+				field: 'email',
+				message: 'Kelvoton sähköpostiosoite.',
+			});
+		}
+
+		// Validate password
+		if (password.length < 6) {
+			return setError({
+				field: 'password',
+				message: 'Kelvoton salasana.',
+			});
+		}
 
 		setLoading(true);
 
@@ -49,7 +65,10 @@ export const Login = () => {
 		setLoading(false);
 
 		if (userResponse.status !== 200 || authResponse.status !== 200) {
-			setError('Kelvoton sähköposti tai salasana.');
+			setError({
+				field: '',
+				message: 'Kelvoton sähköpostiosoite tai salasana.',
+			});
 			return;
 		}
 
@@ -69,7 +88,6 @@ export const Login = () => {
 				display: 'flex',
 				alignItems: 'center',
 				justifyContent: 'center',
-				padding: '0 40px',
 				userSelect: 'none',
 			}}
 		>
@@ -79,28 +97,28 @@ export const Login = () => {
 					backgroundSize: 'cover',
 					backgroundPosition: 'center',
 					backgroundRepeat: 'no-repeat',
-					height: 'calc(100vh - 32px)',
 					width: '100vw',
 					position: 'fixed',
 					opacity: 0.1,
 					filter: 'grayscale(1)',
+					height: 'calc(100vh - 32px)',
 				}}
 			></div>
 			<Box
 				sx={{
 					display: 'flex',
 					width: '100%',
-					maxWidth: '1000px',
 					justifyContent: 'center',
 					backgroundColor: '#fff',
 					boxShadow: '0 0 3px 0 rgba(0, 0, 0, 0.1)',
 					padding: '20px',
-					borderRadius: 5,
+
 					gap: '40px',
 					alignItems: 'center',
 					zIndex: 1,
-					height: '100%',
-					maxHeight: '500px',
+					height: 'calc(100vh - 32px)',
+					maxHeight: '600px',
+					maxWidth: '1000px',
 				}}
 			>
 				<Box
@@ -118,7 +136,7 @@ export const Login = () => {
 						maxWidth: '500px',
 						backgroundColor: '#f3f5f990',
 						height: '100%',
-						padding: '80px 40px',
+						padding: 40,
 						borderRadius: 10,
 					}}
 				>
@@ -166,15 +184,18 @@ export const Login = () => {
 						</Link>
 						.
 					</Typography>
-					{error && <Alert severity="error">{error}</Alert>}
+					{error.message && (
+						<Alert severity="error">{error.message}</Alert>
+					)}
 					<TextField
 						required
 						label="Sähköposti"
 						type="email"
+						error={error.field === 'email'}
 						value={email}
 						disabled={loading}
 						onChange={(e) => {
-							if (error) setError('');
+							if (error) setError({ field: '', message: '' });
 							setEmail(e.target.value);
 						}}
 					/>
@@ -182,10 +203,11 @@ export const Login = () => {
 						required
 						label="Salasana"
 						type="password"
+						error={error.field === 'password'}
 						value={password}
 						disabled={loading}
 						onChange={(e) => {
-							if (error) setError('');
+							if (error) setError({ field: '', message: '' });
 							setPassword(e.target.value);
 						}}
 					/>
