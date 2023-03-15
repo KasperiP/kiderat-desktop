@@ -55,9 +55,9 @@
 		"windows": [
 			{
 				"fullscreen": false,
-				"resizable": true,
+				"resizable": false,
 				"decorations": false,
-				"title": "Kide rat",
+				"title": "main",
 				"width": 1000,
 				"height": 600,
 				"minHeight": 600,
