@@ -1,9 +1,10 @@
 import { invoke } from '@tauri-apps/api/tauri';
 import { useEffect } from 'react';
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
-import { Login } from './components/Login/Login';
+
 import { Titlebar } from './components/Titlebar/Titlebar';
 import { Dashboard } from './pages/Dashboard';
+import { Login } from './pages/Login';
 
 function App() {
 	// Disable right click

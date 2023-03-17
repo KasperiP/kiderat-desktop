@@ -5,7 +5,7 @@ import { open } from '@tauri-apps/api/shell';
 import { FormEvent, useContext, useState } from 'react';
 import { AiOutlineLogin } from 'react-icons/ai';
 import { useNavigate } from 'react-router-dom';
-import { GlobalContext } from '../../context/ContextProvider';
+import { GlobalContext } from '../context/ContextProvider';
 
 export const Login = () => {
 	const [email, setEmail] = useState('');
