@@ -42,8 +42,6 @@ export const Titlebar = () => {
 			sx={{
 				height: 32,
 				background: '#5e35b1',
-				'-webkit-user-select': 'none',
-				userSelect: 'none',
 				display: 'flex',
 				justifyContent: 'space-between',
 				alignItems: 'center',
