@@ -88,203 +88,167 @@ export const Login = () => {
 				display: 'flex',
 				alignItems: 'center',
 				justifyContent: 'center',
-				userSelect: 'none',
 			}}
 		>
 			<div
 				style={{
-					backgroundImage: "url('/login_bg.svg')",
+					backgroundImage: "url('/city.svg')",
 					backgroundSize: 'cover',
 					backgroundPosition: 'center',
 					backgroundRepeat: 'no-repeat',
 					width: '100vw',
 					position: 'fixed',
-					opacity: 0.1,
+					opacity: 0.08,
 					filter: 'grayscale(1)',
 					height: 'calc(100vh - 32px)',
 				}}
 			></div>
-			<Box
-				sx={{
-					display: 'flex',
-					width: '100%',
-					justifyContent: 'center',
-					backgroundColor: '#fff',
-					boxShadow: '0 0 3px 0 rgba(0, 0, 0, 0.1)',
-					padding: '20px',
 
-					gap: '40px',
-					alignItems: 'center',
-					zIndex: 1,
-					height: 'calc(100vh - 32px)',
-					maxHeight: '600px',
-					maxWidth: '1000px',
+			<Box
+				component={'form'}
+				autoComplete="off"
+				autoCorrect="off"
+				noValidate
+				onSubmit={handleLogin}
+				style={{
+					display: 'flex',
+					flexDirection: 'column',
+					justifyContent: 'center',
+					gap: '25px',
+					width: '50%',
+					height: '100%',
+					padding: 40,
+					borderRadius: 10,
 				}}
 			>
 				<Box
-					component={'form'}
-					autoComplete="off"
-					autoCorrect="off"
-					noValidate
-					onSubmit={handleLogin}
-					style={{
+					sx={{
 						display: 'flex',
-						flexDirection: 'column',
-						justifyContent: 'center',
-						gap: '25px',
-						width: '50%',
-						maxWidth: '500px',
-						backgroundColor: '#f3f5f990',
-						height: '100%',
-						padding: 40,
-						borderRadius: 10,
+						alignItems: 'center',
+						gap: '10px',
 					}}
 				>
-					<Box
-						sx={{
-							display: 'flex',
-							alignItems: 'center',
-							gap: '10px',
+					<AiOutlineLogin
+						size={40}
+						color="#fff"
+						style={{
+							backgroundColor: '#5c34ad',
+							borderRadius: '50%',
+							padding: '5px',
 						}}
-					>
-						<AiOutlineLogin
-							size={40}
-							color="#fff"
-							style={{
-								backgroundColor: '#5c34ad',
-								borderRadius: '50%',
-								padding: '5px',
-							}}
-						/>
-						<Typography
-							variant="h4"
-							fontWeight={500}
-							lineHeight={0.5}
-							color="#0d0f11"
-						>
-							Kirjaudu sisään
-						</Typography>
-					</Box>
+					/>
 					<Typography
-						variant="body1"
-						fontWeight={400}
-						color="#a3a3ad"
+						variant="h4"
+						fontWeight={500}
+						lineHeight={0.5}
+						color="#0d0f11"
 					>
-						Kirjaudu sisään käyttäen <strong>Kide.app</strong>{' '}
-						tunnuksiasi. Emme tallenna kirjautumistietojasi.
-						Sovellus pohjautuu avoimeen{' '}
-						<Link
-							href="#"
-							onClick={async () =>
-								await open('https://kide.app/tietosuojaseloste')
-							}
-							sx={{ color: '#5c34ad', textDecoration: 'none' }}
-						>
-							lähdekoodiin
-						</Link>
-						.
+						Kirjaudu sisään
 					</Typography>
-					{error.message && (
-						<Alert severity="error">{error.message}</Alert>
-					)}
-					<TextField
-						required
-						label="Sähköposti"
-						type="email"
-						error={error.field === 'email'}
-						value={email}
-						disabled={loading}
-						onChange={(e) => {
-							if (error) setError({ field: '', message: '' });
-							setEmail(e.target.value);
-						}}
-					/>
-					<TextField
-						required
-						label="Salasana"
-						type="password"
-						error={error.field === 'password'}
-						value={password}
-						disabled={loading}
-						onChange={(e) => {
-							if (error) setError({ field: '', message: '' });
-							setPassword(e.target.value);
-						}}
-					/>
-					<LoadingButton
-						variant="contained"
-						size={'large'}
-						type="submit"
-						loading={loading}
-					>
-						Kirjaudu
-					</LoadingButton>
 				</Box>
+				<Typography variant="body1" fontWeight={400}>
+					Kirjaudu sisään käyttäen <strong>Kide.app</strong>{' '}
+					tunnuksiasi. Emme tallenna kirjautumistietojasi. Sovellus
+					pohjautuu avoimeen{' '}
+					<Link
+						href="#"
+						onClick={async () =>
+							await open('https://kide.app/tietosuojaseloste')
+						}
+						sx={{ color: '#5c34ad', textDecoration: 'none' }}
+					>
+						lähdekoodiin
+					</Link>
+					.
+				</Typography>
+				{error.message && (
+					<Alert severity="error">{error.message}</Alert>
+				)}
+				<TextField
+					required
+					label="Sähköposti"
+					type="email"
+					error={error.field === 'email'}
+					value={email}
+					disabled={loading}
+					onChange={(e) => {
+						if (error) setError({ field: '', message: '' });
+						setEmail(e.target.value);
+					}}
+				/>
+				<TextField
+					required
+					label="Salasana"
+					type="password"
+					error={error.field === 'password'}
+					value={password}
+					disabled={loading}
+					onChange={(e) => {
+						if (error) setError({ field: '', message: '' });
+						setPassword(e.target.value);
+					}}
+				/>
+				<LoadingButton
+					variant="contained"
+					size={'large'}
+					type="submit"
+					loading={loading}
+				>
+					Kirjaudu
+				</LoadingButton>
+			</Box>
+			<Box
+				sx={{
+					height: '100%',
+					width: '50%',
+					borderRadius: 5,
+					position: 'relative',
+					display: 'flex',
+					justifyContent: 'center',
+				}}
+			>
 				<Box
 					sx={{
-						height: '100%',
-						width: '50%',
-						borderRadius: 5,
-						position: 'relative',
 						display: 'flex',
 						justifyContent: 'center',
+						alignItems: 'center',
+						height: '100%',
+						flexDirection: 'column',
 					}}
 				>
-					<div
-						style={{
-							backgroundImage: "url('/rat_bg.svg')",
-							backgroundSize: 'cover',
-							height: '100%',
-							width: '100%',
-							position: 'absolute',
-							filter: 'grayscale(1)',
-							opacity: 0.1,
-							borderRadius: 10,
-						}}
-					></div>
 					<Box
 						sx={{
-							display: 'flex',
-							justifyContent: 'center',
-							alignItems: 'center',
-							height: '100%',
-							flexDirection: 'column',
+							transition: 'transform 0.5s ease-in-out',
+							'&:hover': {
+								transform: 'rotate(-3deg) scale(1.05)',
+							},
 						}}
 					>
-						<Box
-							sx={{
-								transition: 'transform 0.5s ease-in-out',
-								'&:hover': {
-									transform: 'rotate(-3deg) scale(1.05)',
-								},
+						<img
+							src="/kiderat_logo.svg"
+							width={212}
+							height={212}
+							style={{
+								filter: 'invert(16%) sepia(85%) saturate(2793%) hue-rotate(253deg) brightness(96%) contrast(86%)',
 							}}
-						>
-							<img
-								src="/kiderat_logo.svg"
-								width={212}
-								height={212}
-								style={{
-									filter: 'invert(16%) sepia(85%) saturate(2793%) hue-rotate(253deg) brightness(96%) contrast(86%)',
-								}}
-								draggable={false}
-							/>
-						</Box>
-
-						<Typography
-							variant="h6"
-							sx={{
-								textTransform: 'uppercase',
-								fontWeight: 700,
-								fontSize: '4.5rem',
-								backgroundImage:
-									'linear-gradient(90deg, #5c34ad, #a3a3ad)',
-								WebkitBackgroundClip: 'text',
-								WebkitTextFillColor: 'transparent',
-							}}
-						>
-							Kide.rat
-						</Typography>
+							draggable={false}
+						/>
 					</Box>
+
+					<Typography
+						variant="h6"
+						sx={{
+							textTransform: 'uppercase',
+							fontWeight: 700,
+							fontSize: '4.5rem',
+							backgroundImage:
+								'linear-gradient(90deg, #5c34ad, #a3a3ad)',
+							WebkitBackgroundClip: 'text',
+							WebkitTextFillColor: 'transparent',
+						}}
+					>
+						Kide.rat
+					</Typography>
 				</Box>
 			</Box>
 		</Box>
