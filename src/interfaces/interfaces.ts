@@ -1,3 +1,135 @@
+export interface IEvent {
+	company: ICompany;
+	product: IProduct;
+	variants?: IVariant[];
+	categories: ICategory[];
+}
+
+export interface ICategory {
+	id: string;
+	name: string;
+	nameResourceKey: string;
+	type: number;
+	productTypes: number[];
+	parentCategoryId: null;
+	orderingNumber: number;
+	isFilterable: boolean;
+	isPublic: boolean;
+	dateCreated: Date;
+	dateModified: Date;
+}
+
+export interface ICompany {
+	email: string;
+	url: string;
+	phone: string;
+	streetAddress: string;
+	city: string;
+	postalCode: string;
+	country: string;
+	latitude: number;
+	longitude: number;
+	organizationType: number;
+	isFavorited: boolean;
+	productCount: number;
+	id: string;
+	name: string;
+	description: string;
+	ingress: string;
+	mediaFilename: string;
+	favoritedTimes: number;
+	dateCreated: Date;
+	dateModified: Date;
+}
+
+export interface IProduct {
+	productType: number;
+	city: string;
+	country: string;
+	dateActualFrom: Date;
+	dateActualUntil: Date;
+	latitude: number;
+	longitude: number;
+	postalCode: string;
+	streetAddress: string;
+	place: string;
+	companyId: string;
+	datePublishFrom: Date;
+	datePublishUntil: Date;
+	dateSalesFrom: Date;
+	dateSalesUntil: Date;
+	isDeleted: boolean;
+	isPublic: boolean;
+	isPublished: boolean;
+	isFavorited: boolean;
+	pricingInformation: string;
+	minTotalReservationsPerCheckout: null;
+	maxTotalReservationsPerCheckout: null;
+	availability: number;
+	maxPrice: IPrice;
+	minPrice: IPrice;
+	hasFreeInventoryItems: boolean;
+	hasInventoryItems: boolean;
+	isLong: boolean;
+	isActual: boolean;
+	salesStarted: boolean;
+	salesEnded: boolean;
+	salesOngoing: boolean;
+	salesPaused: boolean;
+	time: number;
+	timeUntilSalesStart: number;
+	id: string;
+	name: string;
+	description: string;
+	ingress: string;
+	mediaFilename: string;
+	favoritedTimes: number;
+	dateCreated: Date;
+	dateModified: Date;
+}
+
+export interface IPrice {
+	eur: number;
+}
+
+export interface IVariant {
+	inventoryId: string;
+	currencyCode: string;
+	pricePerItem: number;
+	vat: number;
+	notesInstructions: string;
+	requiredInventoryIdReservations: any[];
+	availability: number;
+	isProductVariantActive: boolean;
+	isProductVariantMarkedAsOutOfStock: boolean;
+	isProductVariantTransferable: boolean;
+	isProductVariantVisible: boolean;
+	isProductVariantHakaAuthenticationRequired: boolean;
+	productVariantMaximumItemQuantityPerUser: number;
+	productVariantMaximumReservableQuantity: number;
+	productVariantMinimumReservableQuantity: number;
+	linkedProductVariants: any[];
+	accessControlMemberships: any[];
+	contentsMemberships: any[];
+	productId: string;
+	productType: number;
+	dateActualFrom: null;
+	dateActualUntil: null;
+	dateSalesFrom: Date;
+	dateSalesUntil: null;
+	salesStarted: null;
+	salesEnded: null;
+	salesOngoing: null;
+	id: string;
+	name: string;
+	description: string;
+	ingress: string;
+	mediaFilename: null;
+	favoritedTimes: number;
+	dateCreated: Date;
+	dateModified: Date;
+}
+
 export interface IUser {
 	birthday: null;
 	email: string;
