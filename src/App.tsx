@@ -1,9 +1,9 @@
 import { invoke } from '@tauri-apps/api/tauri';
 import { useEffect } from 'react';
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
-import { Dashboard } from './components/Dashboard/Dashboard';
 import { Login } from './components/Login/Login';
 import { Titlebar } from './components/Titlebar/Titlebar';
+import { Dashboard } from './pages/Dashboard';
 
 function App() {
 	// Disable right click
@@ -34,6 +34,7 @@ function App() {
 				<Routes>
 					<Route path="/" element={<Login />} />
 					<Route path="/dashboard" element={<Dashboard />} />
+					<Route path="*" element={<Login />} />
 				</Routes>
 			</Router>
 		</>
