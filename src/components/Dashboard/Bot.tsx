@@ -71,7 +71,12 @@ export const Bot = () => {
 				return;
 			}
 
-			await new Promise((resolve) => setTimeout(resolve, 5000));
+			await new Promise((resolve) =>
+				setTimeout(
+					resolve,
+					globalCtx?.settings.retryTicketReserveDelay || 1000
+				)
+			);
 			const res = await reserveTicketRecursive(
 				variant,
 				authorizationToken,
@@ -103,7 +108,12 @@ export const Bot = () => {
 					tries + 1
 				} kertaa. Yritetään uudelleen...`
 			);
-			await new Promise((resolve) => setTimeout(resolve, 1000));
+			await new Promise((resolve) =>
+				setTimeout(
+					resolve,
+					globalCtx?.settings.retryEventRefreshDelay || 1000
+				)
+			);
 			const res = await refreshEventRecursive(event, tries + 1);
 			return res;
 		}
@@ -111,7 +121,7 @@ export const Bot = () => {
 
 	const handleUpcomingRecursive = async (event: IEvent): Promise<void> => {
 		if (new Date() < new Date(event.product.dateSalesFrom)) {
-			await new Promise((resolve) => setTimeout(resolve, 1000));
+			await new Promise((resolve) => setTimeout(resolve, 500));
 			const res = await handleUpcomingRecursive(event);
 			return res;
 		} else {
@@ -122,7 +132,6 @@ export const Bot = () => {
 	const handleBotting = async () => {
 		setStatus('käynnissä');
 		if (!event || !globalCtx.authorizationToken) return;
-
 		if (new Date() < new Date(event.product.dateSalesFrom)) {
 			addLog(
 				'Lipunmyynti ei ole vielä alkanut. Odotetaan myynnin alkua...'

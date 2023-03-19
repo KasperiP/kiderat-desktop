@@ -12,14 +12,16 @@ interface GlobalState {
 	user?: IUser;
 	event?: IEvent;
 	settings: {
-		amount: number | null;
+		retryEventRefreshDelay: number;
+		retryTicketReserveDelay: number;
 	};
 	setState: React.Dispatch<React.SetStateAction<GlobalState>>;
 }
 
 const initialState: GlobalState = {
 	settings: {
-		amount: null,
+		retryEventRefreshDelay: 1000,
+		retryTicketReserveDelay: 1000,
 	},
 	setState: () => {
 		return;
@@ -34,7 +36,10 @@ export const GlobalContextProvider = ({ children }: ContextProviderProps) => {
 				authorizationToken: state?.authorizationToken,
 				user: state?.user,
 				settings: {
-					amount: state?.settings.amount,
+					retryEventRefreshDelay:
+						state?.settings.retryEventRefreshDelay,
+					retryTicketReserveDelay:
+						state?.settings.retryTicketReserveDelay,
 				},
 				setState,
 				event: state?.event,

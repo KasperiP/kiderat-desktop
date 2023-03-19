@@ -1,51 +1,48 @@
-import { Box, TextField, Typography } from '@mui/material';
-import FormControl from '@mui/material/FormControl';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import FormLabel from '@mui/material/FormLabel';
-import Radio from '@mui/material/Radio';
-import RadioGroup from '@mui/material/RadioGroup';
-import { ChangeEvent, useContext } from 'react';
+import { Alert, Box, TextField, Typography } from '@mui/material';
+import { ChangeEvent, useContext, useState } from 'react';
 import { FiSettings } from 'react-icons/fi';
 import { GlobalContext } from '../../context/ContextProvider';
 import { StepContext } from '../../pages/Dashboard';
 import { ButtonRow } from './ButtonRow';
 
 export const Settings = () => {
+	const [error, setError] = useState({ field: '', message: '' });
+
 	const stepCtx = useContext(StepContext);
 	const globalCtx = useContext(GlobalContext);
 
 	const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-		const value = (event.target as HTMLInputElement).value;
-		if (value === 'max') {
-			globalCtx?.setState((prev) => ({
-				...prev,
-				settings: {
-					amount: null,
-				},
-			}));
-		} else {
-			globalCtx?.setState((prev) => ({
-				...prev,
-				settings: {
-					amount: 1,
-				},
-			}));
-		}
-	};
-
-	const handleAmountChange = (event: ChangeEvent<HTMLInputElement>) => {
-		const num = parseInt((event.target as HTMLInputElement).value);
-		if (isNaN(num) || num < 1) return;
-
-		globalCtx?.setState((prev) => ({
-			...prev,
+		let num = Number(event.target.value);
+		globalCtx?.setState({
+			...globalCtx,
 			settings: {
-				amount: num,
+				...globalCtx?.settings,
+				[event.target.name]: isNaN(num) ? 0 : num,
 			},
-		}));
+		});
 	};
 
 	const handleNext = () => {
+		if (
+			!globalCtx?.settings.retryEventRefreshDelay ||
+			globalCtx?.settings.retryEventRefreshDelay <= 0
+		) {
+			return setError({
+				field: 'retryEventRefreshDelay',
+				message: 'Virheellinen arvo.',
+			});
+		}
+
+		if (
+			!globalCtx?.settings.retryTicketReserveDelay ||
+			globalCtx?.settings.retryTicketReserveDelay <= 0
+		) {
+			return setError({
+				field: 'retryTicketReserveDelay',
+				message: 'Virheellinen arvo.',
+			});
+		}
+
 		stepCtx.setActiveStep(stepCtx.activeStep + 1);
 	};
 
@@ -97,47 +94,42 @@ export const Settings = () => {
 						</Typography>
 					</Box>
 					<Typography variant="body1" color="#0d0f11">
-						Muokkaa tapahtuman asetuksia, kuten varattujen lippujen
-						määrää.
+						Muokkaa viivettä, jonka jälkeen botti yrittää tapahtumaa
+						uudelleen. Viive on esitetty millisekunteina.
 					</Typography>
-					<FormControl>
-						<FormLabel id="radio-buttons-group">
-							Kuinka monta lippua haluat varata?
-						</FormLabel>
-						<RadioGroup
-							aria-labelledby="radio-buttons-group"
-							name="controlled-radio-buttons-group"
-							value={
-								globalCtx?.settings.amount === null
-									? 'max'
-									: 'custom'
-							}
-							onChange={handleChange}
-						>
-							<FormControlLabel
-								value="max"
-								control={<Radio />}
-								label="Maksimi"
-							/>
-							<FormControlLabel
-								value="custom"
-								control={<Radio />}
-								label="Valittu määrä"
-							/>
-						</RadioGroup>
-					</FormControl>
-					{globalCtx?.settings.amount !== null && (
-						<TextField
-							label="Lippujen määrä"
-							required
-							value={globalCtx?.settings.amount}
-							onChange={handleAmountChange}
-							inputProps={{
-								inputMode: 'numeric',
-								pattern: '[0-9]*',
-							}}
-						/>
+					{error.message && (
+						<Alert severity="error" sx={{ mt: 1 }}>
+							{error.message}
+						</Alert>
 					)}
+					<TextField
+						sx={{ mt: 2 }}
+						label="Tapahtuman päivitys viive (ms)"
+						required
+						value={globalCtx?.settings.retryEventRefreshDelay}
+						onChange={handleChange}
+						id="retryEventRefreshDelay"
+						name="retryEventRefreshDelay"
+						error={error.field === 'retryEventRefreshDelay'}
+						inputProps={{
+							inputMode: 'numeric',
+							pattern: '[0-9]*',
+						}}
+					/>
+					<TextField
+						sx={{ mt: 2 }}
+						label="Lipun varaus viive (ms)"
+						required
+						value={globalCtx?.settings.retryTicketReserveDelay}
+						onChange={handleChange}
+						name="retryTicketReserveDelay"
+						id="retryTicketReserveDelay"
+						error={error.field === 'retryTicketReserveDelay'}
+						inputProps={{
+							inputMode: 'numeric',
+							pattern: '[0-9]*',
+						}}
+					/>
 				</Box>
 				<Box
 					sx={{
@@ -146,7 +138,6 @@ export const Settings = () => {
 				>
 					<img
 						src="/settings.svg"
-						alt=""
 						style={{ maxWidth: '100%' }}
 						draggable={false}
 					/>
