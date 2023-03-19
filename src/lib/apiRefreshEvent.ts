@@ -1,7 +1,9 @@
 import { ResponseType, getClient } from '@tauri-apps/api/http';
 import { IEvent } from '../interfaces/interfaces';
 
-export const refreshEvent = async (event: IEvent): Promise<IEvent | null> => {
+export const apiRefreshEvent = async (
+	event: IEvent
+): Promise<IEvent | null> => {
 	const id = event.product.id;
 
 	const client = await getClient();

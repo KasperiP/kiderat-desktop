@@ -5,8 +5,8 @@ import { HiOutlineStatusOnline } from 'react-icons/hi';
 import { useNavigate } from 'react-router-dom';
 import { GlobalContext } from '../../context/ContextProvider';
 import { IEvent, IVariant } from '../../interfaces/interfaces';
-import { refreshEvent } from '../../lib/refreshEvent';
-import { reserveTickets } from '../../lib/reserveTicket';
+import { apiRefreshEvent } from '../../lib/apiRefreshEvent';
+import { apiReserveTicket } from '../../lib/apiReserveTicket';
 import { StepContext } from '../../pages/Dashboard';
 import { TimeDisplay } from '../TimeDisplay/TimeDisplay';
 
@@ -59,7 +59,7 @@ export const Bot = () => {
 		amount: number,
 		tries: number = 0
 	): Promise<void> => {
-		const res = await reserveTickets(variant, authorizationToken, amount);
+		const res = await apiReserveTicket(variant, authorizationToken, amount);
 
 		if (variantsGot.includes(variant.id)) return;
 
@@ -98,7 +98,7 @@ export const Bot = () => {
 			addLog('Lippuvaihtoehtojen lataus epäonnistui 50 kertaa.');
 			return;
 		}
-		const refreshedEvent = await refreshEvent(event);
+		const refreshedEvent = await apiRefreshEvent(event);
 		setRefreshedEventTries((prev) => prev + 1);
 		if (refreshedEvent) {
 			globalCtx?.setState((prev) => ({
