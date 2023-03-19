@@ -40,15 +40,9 @@ export const ButtonRow = ({
 				</Button>
 			)}
 			<Box sx={{ flex: '1 1 auto' }} />
-			{ctx.activeStep === 2 ? (
-				<LoadingButton onClick={handleNext}>
-					Aloita bottaus
-				</LoadingButton>
-			) : (
-				<LoadingButton loading={loading} onClick={handleNext}>
-					Seuraava
-				</LoadingButton>
-			)}
+			<LoadingButton loading={loading} onClick={handleNext}>
+				Seuraava
+			</LoadingButton>
 		</Box>
 	);
 };
