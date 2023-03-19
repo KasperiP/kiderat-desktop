@@ -20,6 +20,7 @@ export const Bot = () => {
 	const [getVariantTries, setGetVariantTries] = useState<{
 		[key: string]: number;
 	}>({});
+	const [refreshedEventTries, setRefreshedEventTries] = useState<number>(0);
 
 	const navigate = useNavigate();
 
@@ -93,7 +94,12 @@ export const Bot = () => {
 	};
 
 	const refreshEventRecursive = async (event: IEvent): Promise<void> => {
+		if (refreshedEventTries > 50) {
+			addLog('Lippuvaihtoehtojen lataus epäonnistui 50 kertaa.');
+			return;
+		}
 		const refreshedEvent = await refreshEvent(event);
+		setRefreshedEventTries((prev) => prev + 1);
 		if (refreshedEvent) {
 			globalCtx?.setState((prev) => ({
 				...prev,
@@ -102,7 +108,7 @@ export const Bot = () => {
 			addLog('Lippuvaihtoehtojen lataus onnistui.');
 		} else {
 			addLog(
-				'Lippuvaihtoehtojen lataus epäonnistui. Yritetään uudelleen...'
+				`Lippuvaihtoehtojen lataus epäonnistui. Yritetty ${refreshedEventTries} kertaa. Yritetään uudelleen...`
 			);
 			await new Promise((resolve) => setTimeout(resolve, 1000));
 			const res = await refreshEventRecursive(event);
