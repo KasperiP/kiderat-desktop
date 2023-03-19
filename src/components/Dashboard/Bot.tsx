@@ -17,10 +17,6 @@ export const Bot = () => {
 		'odottaa'
 	);
 	const [ticketsGot, setTicketsGot] = useState<number>(0);
-	const [getVariantTries, setGetVariantTries] = useState<{
-		[key: string]: number;
-	}>({});
-	const [refreshedEventTries, setRefreshedEventTries] = useState<number>(0);
 
 	const navigate = useNavigate();
 
@@ -35,10 +31,6 @@ export const Bot = () => {
 	const scrollToBottom = () => {
 		(messagesEndRef.current as any)?.scrollIntoView({ behavior: 'smooth' });
 	};
-
-	useEffect(() => {
-		console.log(getVariantTries);
-	}, [getVariantTries]);
 
 	useEffect(() => {
 		scrollToBottom();
@@ -77,11 +69,6 @@ export const Bot = () => {
 				return;
 			}
 
-			setGetVariantTries((prev) => ({
-				...prev,
-				[id]: tries + 1,
-			}));
-
 			await new Promise((resolve) => setTimeout(resolve, 5000));
 			const res = await reserveTicketRecursive(
 				variant,
@@ -93,13 +80,15 @@ export const Bot = () => {
 		}
 	};
 
-	const refreshEventRecursive = async (event: IEvent): Promise<void> => {
-		if (refreshedEventTries > 50) {
+	const refreshEventRecursive = async (
+		event: IEvent,
+		tries: number = 0
+	): Promise<void> => {
+		if (tries > 50) {
 			addLog('Lippuvaihtoehtojen lataus epäonnistui 50 kertaa.');
 			return;
 		}
 		const refreshedEvent = await apiRefreshEvent(event);
-		setRefreshedEventTries((prev) => prev + 1);
 		if (refreshedEvent) {
 			globalCtx?.setState((prev) => ({
 				...prev,
@@ -108,10 +97,10 @@ export const Bot = () => {
 			addLog('Lippuvaihtoehtojen lataus onnistui.');
 		} else {
 			addLog(
-				`Lippuvaihtoehtojen lataus epäonnistui. Yritetty ${refreshedEventTries} kertaa. Yritetään uudelleen...`
+				`Lippuvaihtoehtojen lataus epäonnistui. Yritetty ${tries} kertaa. Yritetään uudelleen...`
 			);
 			await new Promise((resolve) => setTimeout(resolve, 1000));
-			const res = await refreshEventRecursive(event);
+			const res = await refreshEventRecursive(event, tries + 1);
 			return res;
 		}
 	};
