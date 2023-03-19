@@ -1,11 +1,7 @@
 import { Box, Typography } from '@mui/material';
 import { appWindow } from '@tauri-apps/api/window';
 import { ReactNode } from 'react';
-import {
-	VscChromeClose,
-	VscChromeMaximize,
-	VscChromeMinimize,
-} from 'react-icons/vsc';
+import { VscChromeClose, VscChromeMinimize } from 'react-icons/vsc';
 
 interface ManageButtonProps {
 	onClick: () => void;
@@ -78,9 +74,6 @@ export const Titlebar = () => {
 			<Box>
 				<ManageButton onClick={() => appWindow.minimize()}>
 					<VscChromeMinimize color="#fff" />
-				</ManageButton>
-				<ManageButton onClick={() => appWindow.maximize()}>
-					<VscChromeMaximize color="#fff" />
 				</ManageButton>
 				<ManageButton onClick={() => appWindow.close()}>
 					<VscChromeClose color="#fff" />
