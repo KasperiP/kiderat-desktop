@@ -62,7 +62,9 @@ export const Bot = () => {
 		} else {
 			const id = variant.id;
 			addLog(
-				`Varaus lipulle ${variant.name} epäonnistui. Yritetty ${tries} kertaa. Yritetään uudelleen...`
+				`Varaus lipulle ${variant.name} epäonnistui. Yritetty ${
+					tries + 1
+				} kertaa. Yritetään uudelleen...`
 			);
 			if (tries > 3) {
 				addLog(`Lippu ${variant.name} epäonnistui 3 kertaa.`);
@@ -97,7 +99,9 @@ export const Bot = () => {
 			addLog('Lippuvaihtoehtojen lataus onnistui.');
 		} else {
 			addLog(
-				`Lippuvaihtoehtojen lataus epäonnistui. Yritetty ${tries} kertaa. Yritetään uudelleen...`
+				`Lippuvaihtoehtojen lataus epäonnistui. Yritetty ${
+					tries + 1
+				} kertaa. Yritetään uudelleen...`
 			);
 			await new Promise((resolve) => setTimeout(resolve, 1000));
 			const res = await refreshEventRecursive(event, tries + 1);
