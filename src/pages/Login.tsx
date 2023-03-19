@@ -1,8 +1,9 @@
 import { LoadingButton } from '@mui/lab';
 import { Alert, Box, Link, TextField, Typography } from '@mui/material';
+import { invoke } from '@tauri-apps/api';
 import { Body, ResponseType, getClient } from '@tauri-apps/api/http';
 import { open } from '@tauri-apps/api/shell';
-import { FormEvent, useContext, useState } from 'react';
+import { FormEvent, useContext, useEffect, useState } from 'react';
 import { AiOutlineLogin } from 'react-icons/ai';
 import { useNavigate } from 'react-router-dom';
 import { GlobalContext } from '../context/ContextProvider';
@@ -12,9 +13,14 @@ export const Login = () => {
 	const [password, setPassword] = useState('');
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState({ field: '', message: '' });
+	const [version, setVersion] = useState('');
 
 	const ctx = useContext(GlobalContext);
 	const navigate = useNavigate();
+
+	useEffect(() => {
+		invoke('get_version').then((v) => setVersion(v as string));
+	}, []);
 
 	const handleLogin = async (e: FormEvent<HTMLElement>) => {
 		e.preventDefault();
@@ -236,12 +242,12 @@ export const Login = () => {
 							draggable={false}
 						/>
 					</Box>
-
 					<Typography
 						variant="h6"
 						sx={{
 							textTransform: 'uppercase',
 							fontWeight: 700,
+							lineHeight: 1,
 							fontSize: '4.5rem',
 							backgroundImage:
 								'linear-gradient(90deg, #5c34ad, #a3a3ad)',
@@ -250,6 +256,18 @@ export const Login = () => {
 						}}
 					>
 						Kide.rat
+					</Typography>
+					<Typography
+						variant="body1"
+						fontSize={12}
+						color="#0f0f0f60"
+						sx={{
+							position: 'absolute',
+							bottom: 10,
+							right: 20,
+						}}
+					>
+						Version: v{version}
 					</Typography>
 				</Box>
 			</Box>
