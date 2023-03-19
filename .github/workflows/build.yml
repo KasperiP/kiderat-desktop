@@ -20,8 +20,8 @@ jobs:
               with:
                   version: 7
             - name: build Changelog
-                id: build_changelog
-                run: echo "changelog=- ADD CHANGELOG" >> $GITHUB_OUTPU
+              id: build_changelog
+              run: echo "changelog=- ADD CHANGELOG" >> $GITHUB_OUTPUT
             - name: setup node
               uses: actions/setup-node@v3
               with:
