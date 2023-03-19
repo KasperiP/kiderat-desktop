@@ -153,7 +153,9 @@ export const Login = () => {
 					<Link
 						href="#"
 						onClick={async () =>
-							await open('https://kide.app/tietosuojaseloste')
+							await open(
+								'https://github.com/KasperiP/kiderat-desktop'
+							)
 						}
 						sx={{ color: '#5c34ad', textDecoration: 'none' }}
 					>

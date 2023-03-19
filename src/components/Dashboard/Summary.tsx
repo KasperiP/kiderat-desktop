@@ -1,4 +1,5 @@
 import { Box, Button, Chip, Typography } from '@mui/material';
+import { open } from '@tauri-apps/api/shell';
 import { useContext } from 'react';
 import { AiOutlineCheckCircle } from 'react-icons/ai';
 import { GlobalContext } from '../../context/ContextProvider';
@@ -93,7 +94,14 @@ export const Summary = () => {
 					</Typography>
 
 					<Box mt={2}>
-						<Button variant="outlined" onClick={() => null}>
+						<Button
+							variant="outlined"
+							onClick={async () =>
+								await open(
+									`https://kide.app/events/${globalCtx?.event?.product.id}`
+								)
+							}
+						>
 							Avaa tapahtumasivu
 						</Button>
 					</Box>
@@ -105,7 +113,6 @@ export const Summary = () => {
 				>
 					<img
 						src="/summary.svg"
-						alt=""
 						style={{ maxWidth: '100%' }}
 						draggable={false}
 					/>
