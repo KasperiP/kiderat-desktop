@@ -9,7 +9,7 @@
 Annoyed by getting tickets to student parties? Kide.rat is your solution.
 
 [![GPLv3 License](https://img.shields.io/badge/License-GPL%20v3-black.svg?style=flat&colorA=5e35b1&colorB=5e35b1)](https://opensource.org/licenses/)
-[![Build Status](https://img.shields.io/github/actions/workflow/status/KasperiP/kiderat-desktop/build.yml?branch=main&style=flat&colorA=5e35b1&colorB=5e35b1)](https://github.com/KasperiP/kiderat-desktop/actions?query=workflow%3ABuild)
+[![Build Status](https://img.shields.io/github/actions/workflow/status/kasperip/kiderat-desktop/build.yml?branch=master&style=flat&colorA=5e35b1&colorB=5e35b1)](https://github.com/KasperiP/kiderat-desktop/actions?query=workflow=build)
 
 </div>
   
