@@ -18,8 +18,11 @@ Kide.rat is a worry-free ticket reservation system that will almost certainly ge
 ## Motivation
 The main purpose of this project is to be my "hello world" project for Tauri. There are multiple Kide.app bots, but most of them are not fully open source. Botting tickets is fairly common in Kide.app, and I thought that making an easy and open source bot could force Kide to address this problem. I do not recommend using any bots for reserving tickets, and using any Kide.app is solely your responsibility.
 
-## Download
+## Download & install
 Download latest version from [releases page](https://github.com/KasperiP/kiderat-desktop/releases/latest). App uses automatic updater so if there is update available you will get popup when opening Kiderat. 
+
+[![Kiderat download & install](https://imgur.com/tnf0Qpt.png)](https://www.youtube.com/watch?v=BLe9S5BbjZ8 "How to install Kide.rat")
+<div align="left">Download & install tutorial video</div>
 
 ## Known weaknesses:
 - Bot does everything locally on the client which means bad internet will cause bad results.
