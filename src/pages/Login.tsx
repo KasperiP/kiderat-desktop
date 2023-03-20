@@ -1,6 +1,6 @@
 import { LoadingButton } from '@mui/lab';
 import { Alert, Box, Link, TextField, Typography } from '@mui/material';
-import { invoke } from '@tauri-apps/api';
+import { getVersion } from '@tauri-apps/api/app';
 import { Body, ResponseType, getClient } from '@tauri-apps/api/http';
 import { open } from '@tauri-apps/api/shell';
 import { FormEvent, useContext, useEffect, useState } from 'react';
@@ -19,7 +19,10 @@ export const Login = () => {
 	const navigate = useNavigate();
 
 	useEffect(() => {
-		invoke('get_version').then((v) => setVersion(v as string));
+		(async () => {
+			const ver = await getVersion();
+			setVersion(ver);
+		})();
 	}, []);
 
 	const handleLogin = async (e: FormEvent<HTMLElement>) => {
