@@ -9,6 +9,10 @@
 	cursor: default;
 }
 
+input {
+	cursor: text;
+}
+
 html,
 body {
 	overflow: hidden;
