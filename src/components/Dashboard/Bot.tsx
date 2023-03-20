@@ -97,7 +97,7 @@ export const Bot = () => {
 			return;
 		}
 		const refreshedEvent = await apiRefreshEvent(event);
-		if (refreshedEvent) {
+		if (refreshedEvent?.variants && refreshedEvent.variants.length > 0) {
 			globalCtx?.setState((prev) => ({
 				...prev,
 				event: refreshedEvent,
