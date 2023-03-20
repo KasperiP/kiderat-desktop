@@ -91,8 +91,7 @@ export const Summary = () => {
 					</Typography>
 
 					<Typography variant="body1" color="#0d0f11">
-						<strong>Sijainti:</strong>{' '}
-						{globalCtx?.event?.product?.streetAddress},{' '}
+						<strong>Kaupunki:</strong>{' '}
 						{globalCtx?.event?.product?.city}
 					</Typography>
 
