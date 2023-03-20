@@ -1,7 +1,8 @@
 import { LoadingButton } from '@mui/lab';
 import { Box, Button, Typography } from '@mui/material';
 import { useContext, useEffect, useRef, useState } from 'react';
-import { HiOutlineStatusOnline } from 'react-icons/hi';
+import { AiOutlineClockCircle, AiOutlineSearch } from 'react-icons/ai';
+import { IoTicketOutline } from 'react-icons/io5';
 import { useNavigate } from 'react-router-dom';
 import { GlobalContext } from '../../context/ContextProvider';
 import { IEvent, IVariant } from '../../interfaces/interfaces';
@@ -219,14 +220,20 @@ export const Bot = () => {
 								}
 							/>
 						}
+						icon={<SalesStartIcon />}
 					/>
 					<InfoBox
 						title="Tila"
 						data={`${status.charAt(0).toUpperCase()}${status.slice(
 							1
 						)}`}
+						icon={<StatusIcon />}
 					/>
-					<InfoBox title="Saatuja lippuja" data={ticketsGot} />
+					<InfoBox
+						title="Saatuja lippuja"
+						data={ticketsGot}
+						icon={<TicketsIcon />}
+					/>
 				</Box>
 				<Box
 					sx={{
@@ -275,9 +282,10 @@ export const Bot = () => {
 interface InfoBoxProps {
 	title: string;
 	data: string | React.ReactNode;
+	icon: React.ReactNode;
 }
 
-const InfoBox = ({ title, data }: InfoBoxProps) => {
+const InfoBox = ({ title, data, icon }: InfoBoxProps) => {
 	return (
 		<Box
 			sx={{
@@ -294,15 +302,7 @@ const InfoBox = ({ title, data }: InfoBoxProps) => {
 					gap: '10px',
 				}}
 			>
-				<HiOutlineStatusOnline
-					size={30}
-					color="#5e35b1"
-					style={{
-						backgroundColor: '#fff',
-						borderRadius: '50%',
-						padding: '5px',
-					}}
-				/>
+				{icon}
 				<Typography
 					variant="h6"
 					fontWeight={500}
@@ -322,5 +322,47 @@ const InfoBox = ({ title, data }: InfoBoxProps) => {
 				{data}
 			</Typography>
 		</Box>
+	);
+};
+
+const SalesStartIcon = () => {
+	return (
+		<AiOutlineClockCircle
+			size={30}
+			color="#5e35b1"
+			style={{
+				backgroundColor: '#fff',
+				borderRadius: '50%',
+				padding: '5px',
+			}}
+		/>
+	);
+};
+
+const StatusIcon = () => {
+	return (
+		<AiOutlineSearch
+			size={30}
+			color="#5e35b1"
+			style={{
+				backgroundColor: '#fff',
+				borderRadius: '50%',
+				padding: '5px',
+			}}
+		/>
+	);
+};
+
+const TicketsIcon = () => {
+	return (
+		<IoTicketOutline
+			size={30}
+			color="#5e35b1"
+			style={{
+				backgroundColor: '#fff',
+				borderRadius: '50%',
+				padding: '5px',
+			}}
+		/>
 	);
 };
