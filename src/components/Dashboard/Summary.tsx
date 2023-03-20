@@ -72,6 +72,9 @@ export const Summary = () => {
 							label={globalCtx?.event?.product.name}
 							color="primary"
 							size="small"
+							sx={{
+								maxWidth: '320px',
+							}}
 						/>
 					</Typography>
 
