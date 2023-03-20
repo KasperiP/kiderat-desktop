@@ -9,13 +9,11 @@ import { Login } from './pages/Login';
 function App() {
 	// Disable right click
 	document.addEventListener('contextmenu', (e) => {
-		if (window.location.hostname.includes('localhost')) return;
 		e.preventDefault();
 	});
 
 	// Disable F5
 	document.addEventListener('keydown', (e) => {
-		if (window.location.hostname.includes('localhost')) return;
 		if (e.key === 'F5') {
 			e.preventDefault();
 		}
