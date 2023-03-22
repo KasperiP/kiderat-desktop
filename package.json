@@ -3,6 +3,17 @@
 	"private": true,
 	"version": "0.0.5",
 	"type": "module",
+	"license": "GPL-3.0",
+	"description": "Kiderat is a desktop application for reserving Kide.app tickets.",
+	"author": {
+		"name": "Kasperi Pohtinen",
+		"email": "contact@kassq.dev",
+		"url": "https://wwww.kassq.dev"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/KasperiP/kiderat-desktop"
+	},
 	"scripts": {
 		"dev": "vite",
 		"build": "tsc && vite build",
@@ -14,7 +25,7 @@
 		"@emotion/styled": "^11.10.6",
 		"@fontsource/roboto": "^4.5.8",
 		"@mui/lab": "5.0.0-alpha.123",
-		"@mui/material": "^5.11.12",
+		"@mui/material": "^5.11.14",
 		"@tauri-apps/api": "^1.2.0",
 		"react": "^18.2.0",
 		"react-dom": "^18.2.0",
@@ -22,12 +33,12 @@
 		"react-router-dom": "^6.9.0"
 	},
 	"devDependencies": {
-		"@tauri-apps/cli": "^1.2.2",
-		"@types/node": "^18.7.10",
-		"@types/react": "^18.0.15",
-		"@types/react-dom": "^18.0.6",
-		"@vitejs/plugin-react": "^3.0.0",
-		"typescript": "^4.6.4",
-		"vite": "^4.0.0"
+		"@tauri-apps/cli": "^1.2.3",
+		"@types/node": "^18.15.5",
+		"@types/react": "^18.0.28",
+		"@types/react-dom": "^18.0.11",
+		"@vitejs/plugin-react": "^3.1.0",
+		"typescript": "^4.9.5",
+		"vite": "^4.2.1"
 	}
 }
