@@ -91,8 +91,8 @@ export const Bot = () => {
 		event: IEvent,
 		tries: number = 0
 	): Promise<IEvent | null> => {
-		if (tries > 50) {
-			addLog('Lippuvaihtoehtojen lataus epäonnistui 50 kertaa.');
+		if (tries > 100) {
+			addLog('Lippuvaihtoehtojen lataus epäonnistui 100 kertaa.');
 			return null;
 		}
 		const refreshedEvent = await apiRefreshEvent(event);
