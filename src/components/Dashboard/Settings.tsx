@@ -104,7 +104,7 @@ export const Settings = () => {
 					)}
 					<TextField
 						sx={{ mt: 2 }}
-						label="Tapahtuman päivitys viive (ms)"
+						label="Tapahtuman päivitysviive (ms)"
 						required
 						value={globalCtx?.settings.retryEventRefreshDelay}
 						onChange={handleChange}
@@ -118,7 +118,7 @@ export const Settings = () => {
 					/>
 					<TextField
 						sx={{ mt: 2 }}
-						label="Lipun varaus viive (ms)"
+						label="Lipun varausviive (ms)"
 						required
 						value={globalCtx?.settings.retryTicketReserveDelay}
 						onChange={handleChange}
