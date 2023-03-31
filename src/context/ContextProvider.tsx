@@ -21,7 +21,7 @@ interface GlobalState {
 const initialState: GlobalState = {
 	settings: {
 		retryEventRefreshDelay: 1000,
-		retryTicketReserveDelay: 1000,
+		retryTicketReserveDelay: 500,
 	},
 	setState: () => {
 		return;
