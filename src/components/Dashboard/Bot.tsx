@@ -170,6 +170,13 @@ export const Bot = () => {
 				? (maxQuantity = maxQuantityPerOrder)
 				: (maxQuantity = availability);
 
+			if (maxQuantity === 0) {
+				addLog(
+					`Lippuja vaihtoehdolle ${variant.name} ei ole enää saatavilla.`
+				);
+				continue;
+			}
+
 			const promise = reserveTicketRecursive(
 				variant,
 				globalCtx.authorizationToken,
