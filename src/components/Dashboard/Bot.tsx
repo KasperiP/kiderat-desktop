@@ -61,7 +61,6 @@ export const Bot = () => {
 			setTicketsGot((prev) => prev + amount);
 			setVariantsGot((prev) => [...prev, variant.id]);
 		} else {
-			const id = variant.id;
 			addLog(
 				`Varaus lipulle ${variant.name} epäonnistui. Yritetty ${
 					tries + 1
