@@ -90,10 +90,10 @@ export const Bot = () => {
 	const refreshEventRecursive = async (
 		event: IEvent,
 		tries: number = 0
-	): Promise<void> => {
+	): Promise<IEvent | null> => {
 		if (tries > 50) {
 			addLog('Lippuvaihtoehtojen lataus epäonnistui 50 kertaa.');
-			return;
+			return null;
 		}
 		const refreshedEvent = await apiRefreshEvent(event);
 		if (refreshedEvent?.variants && refreshedEvent.variants.length > 0) {
@@ -102,6 +102,7 @@ export const Bot = () => {
 				event: refreshedEvent,
 			}));
 			addLog('Lippuvaihtoehtojen lataus onnistui.');
+			return refreshedEvent;
 		} else {
 			addLog(
 				`Lippuvaihtoehtojen lataus epäonnistui. Yritetty ${
@@ -144,37 +145,42 @@ export const Bot = () => {
 		} else {
 			addLog('Päivitetään lippuvaihtoehtojen tiedot...');
 		}
-		await refreshEventRecursive(event);
+		// Returns updated event or null if failed n times
+		const refreshedEvent = await refreshEventRecursive(event);
 
-		if (event?.variants && event.variants.length > 0) {
-			addLog(
-				'Lippuvaihtoehtoja löytyi. Siirrytään lippujen varaukseen...'
-			);
-			const promiseArray = [];
-			for (const variant of event.variants) {
-				if (variantsGot.includes(variant.id)) continue;
-				addLog(`Varataan lippuja vaihtoehdolle ${variant.name}...`);
-
-				let maxQuantity: number;
-				const availability = variant.availability;
-				const maxQuantityPerOrder =
-					variant.productVariantMaximumReservableQuantity;
-				availability > maxQuantityPerOrder
-					? (maxQuantity = maxQuantityPerOrder)
-					: (maxQuantity = availability);
-
-				const promise = reserveTicketRecursive(
-					variant,
-					globalCtx.authorizationToken,
-					maxQuantity,
-					0
-				);
-				promiseArray.push(promise);
-			}
-			await Promise.all(promiseArray);
+		// If event is null, it means that it failed to refresh n times
+		// If we get event we already know that it has variants
+		if (!refreshedEvent?.variants) {
 			addLog('Bottaus valmiina.');
 			setStatus('valmis');
+			return;
 		}
+
+		addLog('Lippuvaihtoehtoja löytyi. Siirrytään lippujen varaukseen...');
+		const promiseArray = [];
+		for (const variant of refreshedEvent.variants) {
+			if (variantsGot.includes(variant.id)) continue;
+			addLog(`Varataan lippuja vaihtoehdolle ${variant.name}...`);
+
+			let maxQuantity: number;
+			const availability = variant.availability;
+			const maxQuantityPerOrder =
+				variant.productVariantMaximumReservableQuantity;
+			availability > maxQuantityPerOrder
+				? (maxQuantity = maxQuantityPerOrder)
+				: (maxQuantity = availability);
+
+			const promise = reserveTicketRecursive(
+				variant,
+				globalCtx.authorizationToken,
+				maxQuantity,
+				0
+			);
+			promiseArray.push(promise);
+		}
+		await Promise.all(promiseArray);
+		addLog('Bottaus valmiina.');
+		setStatus('valmis');
 	};
 
 	const handleBack = () => {
