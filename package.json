@@ -1,7 +1,7 @@
 {
 	"name": "kiderat",
 	"private": true,
-	"version": "0.0.6",
+	"version": "0.0.7",
 	"type": "module",
 	"license": "GPL-3.0",
 	"description": "Kiderat is a desktop application for reserving Kide.app tickets.",
