@@ -34,6 +34,7 @@ export const Dashboard = () => {
 					opacity: 0.08,
 					filter: 'grayscale(1)',
 					height: 'calc(100vh - 32px)',
+					zIndex: -1,
 				}}
 			></div>
 			<Box

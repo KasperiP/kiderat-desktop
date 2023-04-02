@@ -110,6 +110,7 @@ export const Login = () => {
 					opacity: 0.08,
 					filter: 'grayscale(1)',
 					height: 'calc(100vh - 32px)',
+					zIndex: -1,
 				}}
 			></div>
 
@@ -166,7 +167,11 @@ export const Login = () => {
 								'https://github.com/KasperiP/kiderat-desktop'
 							)
 						}
-						sx={{ color: '#5c34ad', textDecoration: 'none' }}
+						sx={{
+							color: '#5c34ad',
+							textDecoration: 'none',
+							cursor: 'pointer',
+						}}
 					>
 						lähdekoodiin
 					</Link>
