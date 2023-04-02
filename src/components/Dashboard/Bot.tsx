@@ -77,10 +77,16 @@ export const Bot = () => {
 					globalCtx?.settings.retryTicketReserveDelay || 1000
 				)
 			);
+
+			const newAmount = Math.ceil(amount / 2);
+			addLog(
+				`Yritetään varata ${newAmount} kpl lipun ${variant.name} sijaan...`
+			);
+
 			const res = await reserveTicketRecursive(
 				variant,
 				authorizationToken,
-				amount,
+				newAmount,
 				tries + 1
 			);
 			return res;
