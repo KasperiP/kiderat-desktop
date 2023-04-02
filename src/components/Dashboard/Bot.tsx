@@ -79,9 +79,11 @@ export const Bot = () => {
 			);
 
 			const newAmount = Math.ceil(amount / 2);
-			addLog(
-				`Yritetään varata ${newAmount} kpl lipun ${variant.name} sijaan...`
-			);
+			if (newAmount < amount) {
+				addLog(
+					`Yritetään varata ${newAmount} kpl lipun ${variant.name} sijaan...`
+				);
+			}
 
 			const res = await reserveTicketRecursive(
 				variant,
