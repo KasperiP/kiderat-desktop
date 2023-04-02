@@ -61,6 +61,10 @@ export const Settings = () => {
 				}}
 			>
 				<Box
+					component={'form'}
+					autoComplete="off"
+					autoCorrect="off"
+					noValidate
 					sx={{
 						display: 'flex',
 						flexDirection: 'column',

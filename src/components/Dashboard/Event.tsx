@@ -86,6 +86,10 @@ export const Event = () => {
 				}}
 			>
 				<Box
+					component={'form'}
+					autoComplete="off"
+					autoCorrect="off"
+					noValidate
 					sx={{
 						display: 'flex',
 						flexDirection: 'column',
