@@ -10,6 +10,7 @@ Annoyed by getting tickets to student parties? Kide.rat is your solution.
 
 [![GPLv3 License](https://img.shields.io/badge/License-GPL%20v3-black.svg?style=flat&colorA=5e35b1&colorB=5e35b1)](https://opensource.org/licenses/)
 [![Build Status](https://img.shields.io/github/actions/workflow/status/kasperip/kiderat-desktop/build.yml?branch=master&style=flat&colorA=5e35b1&colorB=5e35b1)](https://github.com/KasperiP/kiderat-desktop/actions?query=workflow=build)
+[![Downloads](https://img.shields.io/github/downloads/kasperip/kiderat-desktop/total?style=flat&colorA=5e35b1&colorB=5e35b1)](https://github.com/KasperiP/kiderat-desktop/releases/latest)
 
 </div>
   
@@ -27,6 +28,11 @@ Download latest version from [releases page](https://github.com/KasperiP/kiderat
 ## Known weaknesses:
 - Bot does everything locally on the client which means bad internet will cause bad results.
 - Currently bot supports only one account at the time so you can't get high amount of tickets if there are per user limits. 
+
+## Supporting project:
+If you find this project helpful and valuable, you can contribute to its development and maintenance in several ways. One way is to give it a star on GitHub, which helps raise its visibility and attracts more contributors. You can also share it with others who might benefit from it. If you have experience in programming or design, you can contribute to the project by submitting bug reports, feature requests, or even code changes through pull requests. Lastly, you can support the project financially by sponsoring this project. Your donation will help to cover Rainbow lager costs.  
+
+Your support is greatly appreciated and will help make this project even better!
 
 ## Development setup:
 
