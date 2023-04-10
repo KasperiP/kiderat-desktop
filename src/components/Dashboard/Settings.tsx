@@ -1,4 +1,11 @@
-import { Alert, Box, TextField, Typography } from '@mui/material';
+import {
+	Alert,
+	Autocomplete,
+	Box,
+	Chip,
+	TextField,
+	Typography,
+} from '@mui/material';
 import { ChangeEvent, useContext, useState } from 'react';
 import { FiSettings } from 'react-icons/fi';
 import { GlobalContext } from '../../context/ContextProvider';
@@ -50,6 +57,16 @@ export const Settings = () => {
 		stepCtx.setActiveStep(stepCtx.activeStep - 1);
 	};
 
+	const handleTagsChange = (value: string[]) => {
+		globalCtx?.setState({
+			...globalCtx,
+			settings: {
+				...globalCtx?.settings,
+				tags: value,
+			},
+		});
+	};
+
 	return (
 		<>
 			<Box
@@ -99,7 +116,8 @@ export const Settings = () => {
 					</Box>
 					<Typography variant="body1" color="#0d0f11">
 						Muokkaa viivettä, jonka jälkeen botti yrittää tapahtumaa
-						uudelleen. Viive on esitetty millisekunteina.
+						uudelleen. Lisäksi voit määrittää 3 avainsanaa, joita
+						priorisoidaan lippuvarauksessa.
 					</Typography>
 					{error.message && (
 						<Alert severity="error" sx={{ mt: 1 }}>
@@ -132,6 +150,54 @@ export const Settings = () => {
 						inputProps={{
 							inputMode: 'numeric',
 							pattern: '[0-9]*',
+						}}
+					/>
+					<Autocomplete
+						options={[]}
+						ListboxProps={{ style: { maxHeight: 150 } }}
+						renderInput={(params) => (
+							<TextField
+								{...params}
+								sx={{ mt: 2 }}
+								disabled={
+									globalCtx?.settings &&
+									globalCtx?.settings?.tags.length >= 3
+								}
+								error={error.field === 'tags'}
+								label={`Avainsanat (${
+									globalCtx?.settings.tags.length || 0
+								}/3)`}
+								name="tags"
+								placeholder="Paina enter lisätäksesi avainsanan"
+								variant="outlined"
+							/>
+						)}
+						renderTags={(value: readonly string[], getTagProps) =>
+							value.map((tag: string, index: number) => (
+								<Chip
+									label={tag}
+									color="primary"
+									variant="filled"
+									{...getTagProps({
+										index,
+									})}
+								/>
+							))
+						}
+						value={
+							Array.isArray(globalCtx?.settings.tags)
+								? [...(globalCtx?.settings.tags || [])]
+								: []
+						}
+						freeSolo
+						multiple
+						onChange={(_e, value) => {
+							if (value.length >= 3) {
+								const sliced = value.slice(0, 3);
+								handleTagsChange(sliced);
+							} else {
+								handleTagsChange(value);
+							}
 						}}
 					/>
 				</Box>

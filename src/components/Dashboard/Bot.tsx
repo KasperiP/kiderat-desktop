@@ -165,6 +165,31 @@ export const Bot = () => {
 		}
 
 		addLog('Lippuvaihtoehtoja löytyi. Siirrytään lippujen varaukseen...');
+
+		// Check if any of variant names includes any of the tags
+		const tags = globalCtx?.settings.tags;
+		if (tags && tags.length > 0) {
+			addLog(`Suodatetaan vaihtoehtoja avainsanojen perusteella...`);
+
+			const variantsToReserve = refreshedEvent.variants.filter(
+				(variant) =>
+					tags.some((tag) =>
+						variant.name.toLowerCase().includes(tag.toLowerCase())
+					)
+			);
+
+			if (variantsToReserve.length === 0) {
+				addLog(
+					`Yhtään vaihtoehtoa ei löytynyt avainsanojen perusteella. Yritetään varata kaikki vaihtoehdot.`
+				);
+			} else {
+				addLog(
+					`Löytyi ${variantsToReserve.length} vaihtoehtoa avainsanojen perusteella.`
+				);
+				refreshedEvent.variants = variantsToReserve;
+			}
+		}
+
 		const promiseArray = [];
 		for (const variant of refreshedEvent.variants) {
 			if (variantsGot.includes(variant.id)) continue;

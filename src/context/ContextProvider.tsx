@@ -14,6 +14,7 @@ interface GlobalState {
 	settings: {
 		retryEventRefreshDelay: number;
 		retryTicketReserveDelay: number;
+		tags: string[];
 	};
 	setState: React.Dispatch<React.SetStateAction<GlobalState>>;
 }
@@ -22,6 +23,7 @@ const initialState: GlobalState = {
 	settings: {
 		retryEventRefreshDelay: 1000,
 		retryTicketReserveDelay: 500,
+		tags: [],
 	},
 	setState: () => {
 		return;
@@ -40,6 +42,7 @@ export const GlobalContextProvider = ({ children }: ContextProviderProps) => {
 						state?.settings.retryEventRefreshDelay,
 					retryTicketReserveDelay:
 						state?.settings.retryTicketReserveDelay,
+					tags: state?.settings.tags,
 				},
 				setState,
 				event: state?.event,

@@ -95,6 +95,20 @@ export const Summary = () => {
 						{globalCtx?.event?.product?.city}
 					</Typography>
 
+					<Typography
+						variant="body1"
+						color="#0d0f11"
+						sx={{
+							maxWidth: '320px',
+							overflow: 'hidden',
+							textOverflow: 'ellipsis',
+							whiteSpace: 'nowrap',
+						}}
+					>
+						<strong>Avainsanat:</strong>{' '}
+						{globalCtx?.settings?.tags.join(', ') || 'Ei asetettu'}
+					</Typography>
+
 					<Box mt={2}>
 						<Button
 							variant="outlined"
