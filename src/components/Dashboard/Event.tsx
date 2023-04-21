@@ -40,7 +40,8 @@ export const Event = () => {
 		}
 	};
 
-	const handleNext = async () => {
+	const handleNext = async (e?: any) => {
+		e?.preventDefault();
 		setLoading(true);
 		try {
 			const id = url.split('/').pop();
@@ -90,6 +91,7 @@ export const Event = () => {
 					autoComplete="off"
 					autoCorrect="off"
 					noValidate
+					onSubmit={handleNext}
 					sx={{
 						display: 'flex',
 						flexDirection: 'column',
