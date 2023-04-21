@@ -4,11 +4,12 @@ import StepLabel from '@mui/material/StepLabel';
 import Stepper from '@mui/material/Stepper';
 import { createContext, useState } from 'react';
 import { Bot } from '../components/Dashboard/Bot';
+import { Delay } from '../components/Dashboard/Delay';
 import { Event } from '../components/Dashboard/Event';
-import { Settings } from '../components/Dashboard/Settings';
 import { Summary } from '../components/Dashboard/Summary';
+import { Tags } from '../components/Dashboard/Tags';
 
-const steps = ['Tapahtuma', 'Asetukset', 'Yhteenveto', 'Bottaus'];
+const steps = ['Tapahtuma', 'Viive', 'Avainsanat', 'Yhteenveto', 'Bottaus'];
 
 export const StepContext = createContext<{
 	activeStep: number;
@@ -64,9 +65,10 @@ export const Dashboard = () => {
 					})}
 				</Stepper>
 				{activeStep === 0 && <Event />}
-				{activeStep === 1 && <Settings />}
-				{activeStep === 2 && <Summary />}
-				{activeStep === 3 && <Bot />}
+				{activeStep === 1 && <Delay />}
+				{activeStep === 2 && <Tags />}
+				{activeStep === 3 && <Summary />}
+				{activeStep === 4 && <Bot />}
 			</Box>
 		</StepContext.Provider>
 	);

@@ -6,30 +6,20 @@ import {
 	TextField,
 	Typography,
 } from '@mui/material';
-import { ChangeEvent, useContext, useState } from 'react';
+import { useContext, useState } from 'react';
 import { FiSettings } from 'react-icons/fi';
 import { GlobalContext } from '../../context/ContextProvider';
 import { StepContext } from '../../pages/Dashboard';
 import { ButtonRow } from './ButtonRow';
 
-export const Settings = () => {
+export const Tags = () => {
 	const [error, setError] = useState({ field: '', message: '' });
 
 	const stepCtx = useContext(StepContext);
 	const globalCtx = useContext(GlobalContext);
 
-	const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-		let num = Number(event.target.value);
-		globalCtx?.setState({
-			...globalCtx,
-			settings: {
-				...globalCtx?.settings,
-				[event.target.name]: isNaN(num) ? 0 : num,
-			},
-		});
-	};
-
-	const handleNext = () => {
+	const handleNext = (e?: any) => {
+		e?.preventDefault();
 		if (
 			!globalCtx?.settings.retryEventRefreshDelay ||
 			globalCtx?.settings.retryEventRefreshDelay <= 0
@@ -81,6 +71,7 @@ export const Settings = () => {
 					component={'form'}
 					autoComplete="off"
 					autoCorrect="off"
+					onSubmit={handleNext}
 					noValidate
 					sx={{
 						display: 'flex',
@@ -111,47 +102,23 @@ export const Settings = () => {
 							lineHeight={0.5}
 							color="#0d0f11"
 						>
-							Hallitse asetuksia
+							Avainsanat
 						</Typography>
 					</Box>
-					<Typography variant="body1" color="#0d0f11">
-						Muokkaa viivettä, jonka jälkeen botti yrittää tapahtumaa
-						uudelleen. Lisäksi voit määrittää 3 avainsanaa, joita
-						priorisoidaan lippuvarauksessa.
+					<Typography variant="body2" color="#0d0f11" mt={1}>
+						Lisää <b>avainsanoja</b>, joiden perusteella tapahtumia
+						suodatetaan. Esimerkiksi "<b>jvg</b>" ja "
+						<b>messukeskus</b>" voivat olla hyviä avainsanoja.
+						Mikäli mitään avainsanaa ei löydy lipputyyppien nimistä,
+						Kiderat yrittää varata kaikkia lipputyyppejä. Mikäli
+						avainsana löytyy, Kiderat yrittää varata vain
+						lipputyyppiä, joka sisältää avainsanan.
 					</Typography>
 					{error.message && (
 						<Alert severity="error" sx={{ mt: 1 }}>
 							{error.message}
 						</Alert>
 					)}
-					<TextField
-						sx={{ mt: 2 }}
-						label="Tapahtuman päivitysviive (ms)"
-						required
-						value={globalCtx?.settings.retryEventRefreshDelay}
-						onChange={handleChange}
-						id="retryEventRefreshDelay"
-						name="retryEventRefreshDelay"
-						error={error.field === 'retryEventRefreshDelay'}
-						inputProps={{
-							inputMode: 'numeric',
-							pattern: '[0-9]*',
-						}}
-					/>
-					<TextField
-						sx={{ mt: 2 }}
-						label="Lipun varausviive (ms)"
-						required
-						value={globalCtx?.settings.retryTicketReserveDelay}
-						onChange={handleChange}
-						name="retryTicketReserveDelay"
-						id="retryTicketReserveDelay"
-						error={error.field === 'retryTicketReserveDelay'}
-						inputProps={{
-							inputMode: 'numeric',
-							pattern: '[0-9]*',
-						}}
-					/>
 					<Autocomplete
 						options={[]}
 						ListboxProps={{ style: { maxHeight: 150 } }}
@@ -208,7 +175,9 @@ export const Settings = () => {
 				>
 					<img
 						src="/settings.svg"
-						style={{ maxWidth: '100%' }}
+						style={{
+							maxWidth: '100%',
+						}}
 						draggable={false}
 					/>
 				</Box>
