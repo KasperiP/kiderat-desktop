@@ -62,11 +62,11 @@ export const Summary = () => {
 							Yhteenveto
 						</Typography>
 					</Box>
-					<Typography variant="body1" color="#0d0f11">
+					<Typography variant="body2" color="#0d0f11" mt={1}>
 						Tässä on yhteenveto asetuksistasi. Voit muokata niitä
 						menemällä takaisin asetuksiin.
 					</Typography>
-					<Typography variant="body1" color="#0d0f11" pt={2}>
+					<Typography variant="body2" color="#0d0f11" pt={2}>
 						<strong>Tapahtuma: </strong>{' '}
 						<Chip
 							label={globalCtx?.event?.product.name}
@@ -78,7 +78,7 @@ export const Summary = () => {
 						/>
 					</Typography>
 
-					<Typography variant="body1" color="#0d0f11">
+					<Typography variant="body2" color="#0d0f11">
 						<strong>Myynnin alkuun: </strong>{' '}
 						<TimeDisplay
 							date={
@@ -90,13 +90,13 @@ export const Summary = () => {
 						/>
 					</Typography>
 
-					<Typography variant="body1" color="#0d0f11">
+					<Typography variant="body2" color="#0d0f11">
 						<strong>Kaupunki:</strong>{' '}
 						{globalCtx?.event?.product?.city}
 					</Typography>
 
 					<Typography
-						variant="body1"
+						variant="body2"
 						color="#0d0f11"
 						sx={{
 							maxWidth: '320px',

@@ -156,7 +156,7 @@ export const Login = () => {
 						Kirjaudu sisään
 					</Typography>
 				</Box>
-				<Typography variant="body1" fontWeight={400}>
+				<Typography variant="body2" fontWeight={400}>
 					Kirjaudu sisään käyttäen <strong>Kide.app</strong>{' '}
 					tunnuksiasi. Emme tallenna kirjautumistietojasi. Sovellus
 					pohjautuu avoimeen{' '}
@@ -266,7 +266,7 @@ export const Login = () => {
 						Kide.rat
 					</Typography>
 					<Typography
-						variant="body1"
+						variant="body2"
 						fontSize={12}
 						color="#0f0f0f60"
 						sx={{

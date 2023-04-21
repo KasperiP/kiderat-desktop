@@ -122,7 +122,7 @@ export const Event = () => {
 							Valitse tapahtuma
 						</Typography>
 					</Box>
-					<Typography variant="body1" color="#0d0f11" py={1}>
+					<Typography variant="body2" color="#0d0f11" my={1}>
 						Syötä <strong>Kide.app</strong>-tapahtuman URL-osoite,
 						johon haluat varata lippuja.
 					</Typography>
