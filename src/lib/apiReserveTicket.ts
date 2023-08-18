@@ -31,7 +31,7 @@ export const apiReserveTicket = async (
 			}
 		);
 
-		if ((reserveResponse.data as any).model) {
+		if (reserveResponse.ok) {
 			return true;
 		} else {
 			return false;
