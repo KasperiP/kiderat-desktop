@@ -28,7 +28,9 @@ export const Login = () => {
 	const handleLogin = async (e: FormEvent<HTMLElement>) => {
 		e.preventDefault();
 
-		// Validate email
+		/**
+		 * Validate email
+		 */
 		const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g;
 		if (!emailRegex.test(email)) {
 			return setError({
@@ -37,7 +39,9 @@ export const Login = () => {
 			});
 		}
 
-		// Validate password
+		/**
+		 * Validate password
+		 */
 		if (password.length < 6) {
 			return setError({
 				field: 'password',

@@ -1,25 +1,30 @@
 import { invoke } from '@tauri-apps/api/tauri';
 import { useEffect } from 'react';
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
-
 import { Titlebar } from './components/Titlebar/Titlebar';
 import { Dashboard } from './pages/Dashboard';
 import { Login } from './pages/Login';
 
-function App() {
-	// Disable right click
+const App = () => {
+	/**
+	 * Disable right click
+	 */
 	document.addEventListener('contextmenu', (e) => {
 		e.preventDefault();
 	});
 
-	// Disable F5
+	/**
+	 * Disable F5 key
+	 */
 	document.addEventListener('keydown', (e) => {
 		if (e.key === 'F5') {
 			e.preventDefault();
 		}
 	});
 
-	// Close splashscreen after 3 seconds
+	/**
+	 * Close splashscreen after 3 seconds
+	 */
 	useEffect(() => {
 		setTimeout(() => {
 			invoke('close_splashscreen');
@@ -38,6 +43,6 @@ function App() {
 			</Router>
 		</>
 	);
-}
+};
 
 export default App;

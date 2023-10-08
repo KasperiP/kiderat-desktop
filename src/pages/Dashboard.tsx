@@ -11,10 +11,12 @@ import { Tags } from '../components/Dashboard/Tags';
 
 const steps = ['Tapahtuma', 'Viive', 'Avainsanat', 'Yhteenveto', 'Bottaus'];
 
-export const StepContext = createContext<{
+interface IStepContext {
 	activeStep: number;
 	setActiveStep: React.Dispatch<React.SetStateAction<number>>;
-}>({
+}
+
+export const StepContext = createContext<IStepContext>({
 	activeStep: 0,
 	setActiveStep: () => {},
 });
@@ -51,7 +53,7 @@ export const Dashboard = () => {
 				}}
 			>
 				<Stepper activeStep={activeStep} sx={{ mb: 3 }}>
-					{steps.map((label, index) => {
+					{steps.map((label) => {
 						const stepProps: { completed?: boolean } = {};
 						const labelProps: {
 							optional?: React.ReactNode;
