@@ -4,7 +4,8 @@ import { IVariant } from '../interfaces/interfaces';
 export const apiReserveTicket = async (
 	variant: IVariant,
 	accessToken: string,
-	quantity: number
+	quantity: number,
+	xRequestedId: string
 ): Promise<boolean> => {
 	const client = await getClient();
 
@@ -27,6 +28,7 @@ export const apiReserveTicket = async (
 			{
 				headers: {
 					Authorization: `Bearer ${accessToken}`,
+					'X-Requested-Id': xRequestedId,
 				},
 			}
 		);

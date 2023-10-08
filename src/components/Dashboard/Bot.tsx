@@ -10,6 +10,7 @@ import { apiRefreshEvent } from '../../lib/apiRefreshEvent';
 import { apiReserveTicket } from '../../lib/apiReserveTicket';
 import { StepContext } from '../../pages/Dashboard';
 import { TimeDisplay } from '../TimeDisplay/TimeDisplay';
+import { apiRequestedBy } from '../../lib/apiRequestedBy';
 
 export const Bot = () => {
 	const [logs, setLogs] = useState<string[]>([]);
@@ -50,9 +51,15 @@ export const Bot = () => {
 		variant: IVariant,
 		authorizationToken: string,
 		amount: number,
-		tries: number = 0
+		tries: number = 0,
+		xRequestedId: string
 	): Promise<void> => {
-		const res = await apiReserveTicket(variant, authorizationToken, amount);
+		const res = await apiReserveTicket(
+			variant,
+			authorizationToken,
+			amount,
+			xRequestedId
+		);
 
 		if (variantsGot.includes(variant.id)) return;
 
@@ -89,7 +96,8 @@ export const Bot = () => {
 				variant,
 				authorizationToken,
 				newAmount,
-				tries + 1
+				tries + 1,
+				xRequestedId
 			);
 			return res;
 		}
@@ -190,6 +198,17 @@ export const Bot = () => {
 			}
 		}
 
+		const requestedByIds = await apiRequestedBy(refreshedEvent);
+		addLog("Haetaan 'x-requested-id' arvoja Kideratin palvelimelta...");
+
+		if (!requestedByIds) {
+			addLog(
+				'Lippujen varaamisessa tapahtui virhe. Tämä johtuu Kideratin virheestä. Yritä uudelleen myöhemmin.'
+			);
+			setStatus('valmis');
+			return;
+		}
+
 		const promiseArray = [];
 		for (const variant of refreshedEvent.variants) {
 			if (variantsGot.includes(variant.id)) continue;
@@ -210,11 +229,24 @@ export const Bot = () => {
 				continue;
 			}
 
+			const requestedHeader = requestedByIds.data.find(
+				(el) => el.id === variant.inventoryId
+			);
+
+			if (!requestedHeader?.['x-requested-id']) {
+				addLog(
+					`Lippujen varaamisessa tapahtui virhe. Tämä johtuu Kideratin virheestä. Yritä uudelleen myöhemmin.`
+				);
+				setStatus('valmis');
+				return;
+			}
+
 			const promise = reserveTicketRecursive(
 				variant,
 				globalCtx.authorizationToken,
 				maxQuantity,
-				0
+				0,
+				requestedHeader['x-requested-id']
 			);
 			promiseArray.push(promise);
 		}

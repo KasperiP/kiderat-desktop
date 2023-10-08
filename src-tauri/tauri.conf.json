@@ -31,7 +31,11 @@
 			"http": {
 				"all": true,
 				"request": true,
-				"scope": ["https://auth.kide.app/*", "https://api.kide.app/*"]
+				"scope": [
+					"https://auth.kide.app/*",
+					"https://api.kide.app/*",
+					"https://kiderat.app/*"
+				]
 			}
 		},
 		"bundle": {
