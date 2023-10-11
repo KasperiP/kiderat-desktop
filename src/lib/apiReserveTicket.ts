@@ -1,11 +1,11 @@
 import { Body, getClient } from '@tauri-apps/api/http';
 import { IVariant } from '../interfaces/interfaces';
+import { getRequestId } from '../utils/getRequestedId';
 
 export const apiReserveTicket = async (
 	variant: IVariant,
 	accessToken: string,
-	quantity: number,
-	xRequestedId: string
+	quantity: number
 ): Promise<boolean> => {
 	const client = await getClient();
 
@@ -21,6 +21,8 @@ export const apiReserveTicket = async (
 		toCancel: [],
 	});
 
+	const requestId = getRequestId(variant.inventoryId);
+
 	try {
 		const reserveResponse = await client.post(
 			'https://api.kide.app/api/reservations',
@@ -28,7 +30,7 @@ export const apiReserveTicket = async (
 			{
 				headers: {
 					Authorization: `Bearer ${accessToken}`,
-					'X-Requested-Id': xRequestedId,
+					'X-Requested-Id': requestId,
 				},
 			}
 		);
