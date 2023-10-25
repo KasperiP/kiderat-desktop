@@ -1,7 +1,7 @@
 import { LoadingButton } from '@mui/lab';
 import { Alert, Box, Link, TextField, Typography } from '@mui/material';
 import { getVersion } from '@tauri-apps/api/app';
-import { Body, ResponseType, getClient } from '@tauri-apps/api/http';
+import { ResponseType, getClient } from '@tauri-apps/api/http';
 import { open } from '@tauri-apps/api/shell';
 import { FormEvent, useContext, useEffect, useState } from 'react';
 import { AiOutlineLogin } from 'react-icons/ai';
@@ -9,8 +9,7 @@ import { useNavigate } from 'react-router-dom';
 import { GlobalContext } from '../context/ContextProvider';
 
 export const Login = () => {
-	const [email, setEmail] = useState('');
-	const [password, setPassword] = useState('');
+	const [accessToken, setAccessToken] = useState('');
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState({ field: '', message: '' });
 	const [version, setVersion] = useState('');
@@ -29,47 +28,33 @@ export const Login = () => {
 		e.preventDefault();
 
 		/**
-		 * Validate email
+		 * Validate access token
 		 */
-		const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g;
-		if (!emailRegex.test(email)) {
-			return setError({
-				field: 'email',
-				message: 'Kelvoton sähköpostiosoite.',
+		if (!accessToken) {
+			setError({
+				field: 'accessToken',
+				message: 'Pääsytunnus on pakollinen.',
 			});
+			return;
 		}
 
-		/**
-		 * Validate password
-		 */
-		if (password.length < 6) {
-			return setError({
-				field: 'password',
-				message: 'Kelvoton salasana.',
+		if (accessToken.length < 10) {
+			setError({
+				field: 'accessToken',
+				message: 'Pääsytunnus on liian lyhyt.',
 			});
+			return;
 		}
 
 		setLoading(true);
 
 		const client = await getClient();
 
-		const authBody = Body.text(
-			`client_id=56d9cbe22a58432b97c287eadda040df&grant_type=password&password=${password}&rememberMe=true&username=${email}`
-		);
-
-		const authResponse: any = await client.post(
-			'https://auth.kide.app/oauth2/token',
-			authBody,
-			{
-				responseType: ResponseType.JSON,
-			}
-		);
-
 		const userResponse = await client.get<any>(
 			'https://api.kide.app/api/authentication/user',
 			{
 				headers: {
-					Authorization: `Bearer ${authResponse.data.access_token}`,
+					Authorization: `Bearer ${accessToken}`,
 				},
 				responseType: ResponseType.JSON,
 			}
@@ -77,17 +62,17 @@ export const Login = () => {
 
 		setLoading(false);
 
-		if (userResponse.status !== 200 || authResponse.status !== 200) {
+		if (userResponse.status !== 200) {
 			setError({
 				field: '',
-				message: 'Kelvoton sähköpostiosoite tai salasana.',
+				message: 'Kelvoton pääsytunnus.',
 			});
 			return;
 		}
 
 		ctx?.setState({
 			...ctx,
-			authorizationToken: authResponse.data.access_token,
+			authorizationToken: accessToken,
 			user: userResponse.data.model,
 		});
 
@@ -161,15 +146,15 @@ export const Login = () => {
 					</Typography>
 				</Box>
 				<Typography variant="body2" fontWeight={400}>
-					Kirjaudu sisään käyttäen <strong>Kide.app</strong>{' '}
-					tunnuksiasi. Emme tallenna kirjautumistietojasi. Sovellus
-					pohjautuu avoimeen{' '}
+					Kirjaudu sisään käyttäen{' '}
+					<strong>Kide.app pääsytunnusta</strong> (<i>access token</i>
+					). Pääsytunnus löytyy selaimen kehittäjätyökalujen kautta
+					sovellus välilehdeltä. Katso ohjeet pääsytunnuksen
+					hankkimiseen{' '}
 					<Link
 						href="#"
 						onClick={async () =>
-							await open(
-								'https://github.com/KasperiP/kiderat-desktop'
-							)
+							await open('https://www.kiderat.app/access-token')
 						}
 						sx={{
 							color: '#5c34ad',
@@ -177,7 +162,7 @@ export const Login = () => {
 							cursor: 'pointer',
 						}}
 					>
-						lähdekoodiin
+						täältä
 					</Link>
 					.
 				</Typography>
@@ -186,26 +171,14 @@ export const Login = () => {
 				)}
 				<TextField
 					required
-					label="Sähköposti"
-					type="email"
-					error={error.field === 'email'}
-					value={email}
+					label="Pääsytunnus"
+					type="text"
+					error={error.field === 'accessToken'}
+					value={accessToken}
 					disabled={loading}
 					onChange={(e) => {
 						if (error) setError({ field: '', message: '' });
-						setEmail(e.target.value);
-					}}
-				/>
-				<TextField
-					required
-					label="Salasana"
-					type="password"
-					error={error.field === 'password'}
-					value={password}
-					disabled={loading}
-					onChange={(e) => {
-						if (error) setError({ field: '', message: '' });
-						setPassword(e.target.value);
+						setAccessToken(e.target.value);
 					}}
 				/>
 				<LoadingButton
