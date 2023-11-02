@@ -1,5 +1,5 @@
 export function getRequestId(inventoryId: string): string {
-	const hash = '3a7ceab52edd4b7ba69e3e120be4793f';
+	const hash = 'c352aecab2c7432d95c1cb08241ed583';
 	return btoa(
 		[...inventoryId.replace(/-/g, '')]
 			.map((char, i) =>
