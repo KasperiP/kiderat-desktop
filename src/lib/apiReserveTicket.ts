@@ -1,6 +1,7 @@
 import { Body, getClient } from '@tauri-apps/api/http';
 import { IVariant } from '../interfaces/interfaces';
 import { getRequestId } from '../utils/getRequestedId';
+import { reverseString } from '../utils/reverseString';
 
 export const apiReserveTicket = async (
 	variant: IVariant,
@@ -29,8 +30,8 @@ export const apiReserveTicket = async (
 			body,
 			{
 				headers: {
-					Authorization: `Bearer ${accessToken}`,
-					'X-Requested-Id': requestId,
+					authorization: `Bearer ${reverseString(accessToken)}`,
+					'x-requested-Token': requestId,
 				},
 			}
 		);

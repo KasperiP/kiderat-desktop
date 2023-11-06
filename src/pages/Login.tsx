@@ -7,6 +7,7 @@ import { FormEvent, useContext, useEffect, useState } from 'react';
 import { AiOutlineLogin } from 'react-icons/ai';
 import { useNavigate } from 'react-router-dom';
 import { GlobalContext } from '../context/ContextProvider';
+import { reverseString } from '../utils/reverseString';
 
 export const Login = () => {
 	const [accessToken, setAccessToken] = useState('');
@@ -54,7 +55,7 @@ export const Login = () => {
 			'https://api.kide.app/api/authentication/user',
 			{
 				headers: {
-					Authorization: `Bearer ${accessToken}`,
+					Authorization: `Bearer ${reverseString(accessToken)}`,
 				},
 				responseType: ResponseType.JSON,
 			}

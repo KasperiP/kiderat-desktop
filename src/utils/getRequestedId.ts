@@ -1,5 +1,7 @@
+import { reverseString } from './reverseString';
+
 export function getRequestId(inventoryId: string): string {
-	const hash = 'c352aecab2c7432d95c1cb08241ed583';
+	const hash = reverseString(')c_1PMZHlrvG/eb.utuoy//:sptth(][');
 	return btoa(
 		[...inventoryId.replace(/-/g, '')]
 			.map((char, i) =>
