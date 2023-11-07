@@ -31,7 +31,7 @@ export const apiReserveTicket = async (
 			{
 				headers: {
 					authorization: `Bearer ${reverseString(accessToken)}`,
-					'x-requested-Token': requestId,
+					'x-requested-Token-28': requestId,
 				},
 			}
 		);
